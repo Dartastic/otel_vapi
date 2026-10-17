@@ -1,13 +1,13 @@
-// Licensed under the Dartastic Pro Software License Agreement.
+// Licensed under the MIT License.
 // Copyright 2025-2026 Mindful Software LLC d/b/a Dartastic.io, All rights reserved.
 
-import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
+import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
 import 'otel_vapi_suppression.dart';
 
 const _tracerName = 'dartastic_otel_libs_vapi';
 
-Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
+APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 class VapiResult {
   const VapiResult({
@@ -115,47 +115,47 @@ Future<T> tracedVapi<T>({
   final span = _tracer().startSpan(
     'vapi $operation',
     kind: SpanKind.client,
-    attributes: OTel.attributesFromMap(m),
+    attributes: OTelAPI.attributesFromMap(m),
   );
   try {
     final r = await invoke();
     if (r.result != null) {
       final extras = <Attribute<Object>>[];
       if (r.result!.orgId != null) {
-        extras.add(OTel.attributeString('vapi.org.id', r.result!.orgId!));
+        extras.add(OTelAPI.attributeString('vapi.org.id', r.result!.orgId!));
       }
       if (r.result!.callId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.call.id',
           r.result!.callId!,
         ));
       }
       if (r.result!.assistantId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.assistant.id',
           r.result!.assistantId!,
         ));
       }
       if (r.result!.phoneNumberId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.phone_number.id',
           r.result!.phoneNumberId!,
         ));
       }
       if (r.result!.transport != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.transport',
           r.result!.transport!,
         ));
       }
       if (r.result!.callType != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.call.type',
           r.result!.callType!,
         ));
       }
       if (r.result!.endedReason != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.call.ended_reason',
           r.result!.endedReason!,
         ));
@@ -168,85 +168,85 @@ Future<T> tracedVapi<T>({
         }
       }
       if (r.result!.durationSec != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'vapi.duration_sec',
           r.result!.durationSec!,
         ));
       }
       if (r.result!.transcriberProvider != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.transcriber.provider',
           r.result!.transcriberProvider!,
         ));
       }
       if (r.result!.modelProvider != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.model.provider',
           r.result!.modelProvider!,
         ));
       }
       if (r.result!.modelName != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.model.name',
           r.result!.modelName!,
         ));
       }
       if (r.result!.voiceProvider != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'vapi.voice.provider',
           r.result!.voiceProvider!,
         ));
       }
       if (r.result!.modelInputTokens != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'vapi.model.input_tokens',
           r.result!.modelInputTokens!,
         ));
       }
       if (r.result!.modelOutputTokens != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'vapi.model.output_tokens',
           r.result!.modelOutputTokens!,
         ));
       }
       if (r.result!.sttCost != null) {
-        extras.add(OTel.attributeDouble(
+        extras.add(OTelAPI.attributeDouble(
           'vapi.cost.stt',
           r.result!.sttCost!,
         ));
       }
       if (r.result!.modelCost != null) {
-        extras.add(OTel.attributeDouble(
+        extras.add(OTelAPI.attributeDouble(
           'vapi.cost.model',
           r.result!.modelCost!,
         ));
       }
       if (r.result!.ttsCost != null) {
-        extras.add(OTel.attributeDouble(
+        extras.add(OTelAPI.attributeDouble(
           'vapi.cost.tts',
           r.result!.ttsCost!,
         ));
       }
       if (r.result!.transportCost != null) {
-        extras.add(OTel.attributeDouble(
+        extras.add(OTelAPI.attributeDouble(
           'vapi.cost.transport',
           r.result!.transportCost!,
         ));
       }
       if (r.result!.vapiCost != null) {
-        extras.add(OTel.attributeDouble(
+        extras.add(OTelAPI.attributeDouble(
           'vapi.cost.vapi',
           r.result!.vapiCost!,
         ));
       }
       if (r.result!.totalCost != null) {
-        extras.add(OTel.attributeDouble(
+        extras.add(OTelAPI.attributeDouble(
           'vapi.cost.total',
           r.result!.totalCost!,
         ));
       }
       if (r.result!.statusCode != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'http.response.status_code',
           r.result!.statusCode!,
         ));
@@ -257,13 +257,13 @@ Future<T> tracedVapi<T>({
           );
         }
       }
-      if (extras.isNotEmpty) span.addAttributes(OTel.attributes(extras));
+      if (extras.isNotEmpty) span.addAttributes(OTelAPI.attributes(extras));
     }
     return r.value;
   } catch (e, st) {
-    span.addAttributes(OTel.attributes([
-      OTel.attributeString(
-        ErrorResource.errorType.key,
+    span.addAttributes(OTelAPI.attributes([
+      OTelAPI.attributeString(
+        ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
     ]));
