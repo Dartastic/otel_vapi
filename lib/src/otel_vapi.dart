@@ -10,6 +10,7 @@ const _tracerName = 'dartastic_otel_libs_vapi';
 APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 class VapiResult {
+  /// Creates a result.
   const VapiResult({
     this.orgId,
     this.callId,
@@ -87,8 +88,13 @@ class VapiResult {
   final int? statusCode;
 }
 
+/// What a traced call returned: the value for the caller plus fields
+/// recorded on the span.
 class VapiCallResult<T> {
+  /// Creates a call result.
   const VapiCallResult({required this.value, this.result});
+
+  /// The value returned to the caller.
   final T value;
   final VapiResult? result;
 }
